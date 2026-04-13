@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Матрица приоритизации анкет</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Матрица приоритизации электронных анкет</h1>
+  </header>
+
+  <main>
+
+    <!-- форма добавления новой анкеты -->
+    <section id="add-form">
+      <h2>Добавить анкету</h2>
+      <form id="process-form">
+
+        <div class="form-row">
+          <label>Название:
+            <input type="text" id="inp-name" required placeholder="Название анкеты">
+          </label>
+          <label>Тип:
+            <select id="inp-type">
+              <option value="Маркетинговая">Маркетинговая</option>
+              <option value="HR-исследование">HR-исследование</option>
+              <option value="Клиентская">Клиентская</option>
+              <option value="Внутренняя">Внутренняя</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset>
+          <legend>Операционные критерии (1–5)</legend>
+          <div class="form-row">
+            <label>Удобство заполнения:
+              <input type="number" id="inp-cycleTime" min="1" max="5" value="3">
+            </label>
+            <label>Затраты на разработку:
+              <input type="number" id="inp-cost" min="1" max="5" value="3">
+            </label>
+            <label>Автоматизация обработки:
+              <input type="number" id="inp-automation" min="1" max="5" value="3">
+            </label>
+            <label>Процент отказов:
+              <input type="number" id="inp-rework" min="1" max="5" value="3">
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Стратегические критерии (1–5)</legend>
+          <div class="form-row">
+            <label>Стратегическая ценность:
+              <input type="number" id="inp-strategicValue" min="1" max="5" value="3">
+            </label>
+            <label>Критичность данных:
+              <input type="number" id="inp-criticality" min="1" max="5" value="3">
+            </label>
+            <label>Инновационность:
+              <input type="number" id="inp-innovation" min="1" max="5" value="3">
+            </label>
+            <label>Техдолг платформы:
+              <input type="number" id="inp-techDebt" min="1" max="5" value="3">
+            </label>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="btn-add">Добавить</button>
+      </form>
+    </section>
+
+    <!-- фильтры и кнопки управления -->
+    <section id="controls">
+      <label>Фильтр по зоне:
+        <select id="zone-filter" onchange="filterByZone(this.value)">
+          <option value="all">Все зоны</option>
+          <option value="1">Зона 1 — Срочная доработка</option>
+          <option value="2">Зона 2 — Развитие</option>
+          <option value="3">Зона 3 — Стандартизация</option>
+          <option value="4">Зона 4 — Мониторинг</option>
+        </select>
+      </label>
+      <button class="btn-reset" onclick="resetData()">Сбросить данные</button>
+      <button class="btn-export" onclick="exportJSON()">Экспорт JSON</button>
+    </section>
+
+    <!-- таблица анкет -->
+    <section id="process-table">
+      <h2>Список анкет</h2>
+      <table>
+        <thead>
+          <tr>
+            <th onclick="sortProcesses('name')">Название ↕</th>
+            <th onclick="sortProcesses('type')">Тип ↕</th>
+            <th onclick="sortProcesses('operational')">Опер. качество ↕</th>
+            <th onclick="sortProcesses('strategic')">Стратег. ценность ↕</th>
+            <th onclick="sortProcesses('zone')">Зона ↕</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <!-- строки генерируются через JS -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- матрица приоритизации -->
+    <section id="matrix">
+      <h2>Матрица приоритизации</h2>
+      <div class="matrix-grid">
+        <div class="zone zone-1" id="zone-1">
+          <h3>Срочная доработка</h3>
+        </div>
+        <div class="zone zone-2" id="zone-2">
+          <h3>Развитие</h3>
+        </div>
+        <div class="zone zone-3" id="zone-3">
+          <h3>Стандартизация</h3>
+        </div>
+        <div class="zone zone-4" id="zone-4">
+          <h3>Мониторинг</h3>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
